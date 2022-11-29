@@ -37,6 +37,13 @@ CO_bar=ctrb(A_bar,B_bar);
 rank_C_bar=rank(CO_bar);
 
 [P_bar,k_bar,s_bar]=icare(A_bar,B_bar,Q_bar,R);
+
+%part 6
+p=(s*7.5)';
+z_0=[0 ; 0 ; 0 ; 0];
+L=(place(A',C',p))';
+[V3,s3]=eig(A-L*C);
+x_initial_hat=[0,0,0,0];
 %% Simulink 
 % Parameters
 linewidth = 2;
@@ -69,11 +76,11 @@ end
 
 % Set Model
 % Set the model to use: 1 = linear, 2 = nonlinear.
-Model = 2;
+Model = 1;
 
 % Set Desired State
 % Set the desired state: 1 = Regulation, 2 = Setpoint Tracking.
-Desired = 2;
+Desired = 1;
 
 if Desired == 1
     xd = [0 , 0 , 0 , 0];
@@ -82,25 +89,62 @@ else
 end
 
 % Run Simulation
-[t,~,x,u1] = sim('new_Sim_Simulink');
+%part 3-5
+% [t,~,x,u1] = sim('new_Sim_Simulink');
+%part6
+[t,~,x,u1,x_hat] = sim('new_Sim_Simulink2');
+
 %   x is the state vector of [x; x_dot; phi; phi_dot],  4x1 vector
 
 x1 = x(:,1);% Cart x position plot
 phi = x(:,3);
 theta = rad2deg((phi+pi()))-180;
+delx=x-x_hat;
 
+%part3-5
+% plot(t,x1)
+% title('X vs Time')
+% xlabel('Time (s)')
+% ylabel('X (m)')
+% figure
+% plot(t,theta)
+% title('Theta vs Time')
+% xlabel('Time(s)')
+% ylabel('Theta(deg)')
+% figure
+% plot(t,u1)
+% title('Input vs Time')
+% ylabel('Force (N)')
+% xlabel('Time (s)')
+
+%part6
 plot(t,x1)
+hold on
+plot(t,x_hat(:,1))
 title('X vs Time')
 xlabel('Time (s)')
 ylabel('X (m)')
+legend('x','x hat')
 figure
 plot(t,theta)
+hold on
+plot(t,rad2deg(x_hat(:,3)+pi())-180)
 title('Theta vs Time')
 xlabel('Time(s)')
 ylabel('Theta(deg)')
+legend('theta','theta hat')
 figure
 plot(t,u1)
 title('Input vs Time')
 ylabel('Force (N)')
 xlabel('Time (s)')
-
+figure
+plot(t,delx(:,1))
+ylabel('Error X')
+xlabel('Time (s)')
+title('Error Over Time X')
+figure
+plot(t,rad2deg(delx(:,3)))
+ylabel('Error Phi')
+xlabel('Time (s)')
+title('Error Over Time Phi')
