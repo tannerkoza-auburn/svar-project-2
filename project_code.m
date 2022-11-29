@@ -18,17 +18,25 @@ B=[0 ; (I+l^2*m)/a1 ; 0 ; (l*m)/a1];
 C=[1 , 0 , 0 , 0; 0 , 0 , 1 , 0];
 D=[0 ; 0];
 
-%part 1
+%part 3
 max_theta=0.61;
 max_x=0.55;
 v=[1/(max_x^2) 1  1/(max_theta^2) 1];
 Q=diag(v);
 R=1;
+[P,k,s]=icare(A,B,Q,R);
+k2=inv(R)*B'*P;
 
-% P=sym('P',[4 4]);
-% eqn1=A'*P+P*A+Q-P*B*inv(R)*B'*P==zeros(4);
-% solve(eqn1,P)
- [k,S,P]=lqr(A,B,Q,R);
+%part 5
+v2=[1/(max_x^2) 1  1/(max_theta^2) 1 1];
+Q_bar=diag(v2);
+C_bar=[1 , 0 , 0 , 0];
+A_bar=[A , zeros(4,1) ; C_bar , zeros(1,1)];
+B_bar=[B ; zeros(1,1)];
+CO_bar=ctrb(A_bar,B_bar);
+rank_C_bar=rank(CO_bar);
+
+[P_bar,k_bar,s_bar]=icare(A_bar,B_bar,Q_bar,R);
 %% Simulink 
 % Parameters
 linewidth = 2;
@@ -45,7 +53,7 @@ x_initial = [0.5 ; 0 ; deg2rad(30) ; 0];
 % Set the Controller:
    % 1 = State-feedback linear model
    % 2 = .... so on
-Controller = 1;
+Controller = 3;
 
 if Controller == 1
     K = k;
@@ -54,8 +62,8 @@ elseif Controller == 2
     K = 0;
     K2=0;
 elseif Controller ==3
-    K=0;
-    K2=0;
+   K=k_bar(1:4);
+   K2=k_bar(5);
 end
 
 
@@ -65,7 +73,7 @@ Model = 2;
 
 % Set Desired State
 % Set the desired state: 1 = Regulation, 2 = Setpoint Tracking.
-Desired = 1;
+Desired = 2;
 
 if Desired == 1
     xd = [0 , 0 , 0 , 0];
