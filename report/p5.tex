@@ -18,13 +18,13 @@ $\bar{Q}$, $\bar{R}$, and $\bar{K}$ were designed using the following methodolog
     \end{split}
 \end{equation*}
 
-The value for $\bar{R}$ was left a 1 as in Problem 3. The controller performance was initially tested with the values of $Q$ from Problem 3 while setting the last diagonal equal to 1, but this configuration did not comfortably meet the design requirements. This is why the above changes were made. The resulting $K$ using the same methods in Problem 3 is the following:
+The value for $\bar{R}$ was left a 1 as in Problem 3. The controller performance was initially tested with the values of $Q$ from Problem 3 while setting the last diagonal equal to 1, but this configuration did not comfortably meet the design requirements. This is why the above changes were made. The resulting $\bar{K}$ was determined using the same methods in MATLAB from Problem 3 with $\bar{A}$ and $\bar{B}$ instead of $A$ and $B$.
 
 \begin{equation*}
     \begin{split}
         \bar{K} & =
         \begin{bmatrix}
-            -16.0787 & -11.3733 & 48.8080 & 10.0091 \\
+            -16.08 & -11.37 & 48.81 & 10.01 & -10 \\
         \end{bmatrix}
     \end{split}
 \end{equation*}
@@ -33,21 +33,21 @@ The following figures depict the outputs and input of the linear system with the
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/sfsp_x.png}
     \caption{Linear System X Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/sfsp_theta.png}
     \caption{Linear System $\theta$ Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/sfsp_input.png}
     \caption{Linear System Input}
     \label{}
 \end{figure}
@@ -70,21 +70,21 @@ The following figures depict the outputs and input of the nonlinear system with 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/sfsp_nlin_x.png}
     \caption{Nonlinear System X Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/sfsp_nlin_theta.png}
     \caption{Nonlinear System $\theta$ Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/sfsp_nlin_input.png}
     \caption{Nonlinear System Input}
     \label{}
 \end{figure}

@@ -30,28 +30,28 @@ The following figures depict the outputs and input of the linear system with the
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_lin_x.png}
     \caption{Linear System X Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_lin_x_err.png}
     \caption{Linear System X Error}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_lin_theta.png}
     \caption{Linear System $\theta$ Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_lin_theta_err.png}
     \caption{Linear System $\theta$ Error Input}
     \label{}
 \end{figure}
@@ -59,7 +59,7 @@ The following figures depict the outputs and input of the linear system with the
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_lin_input.png}
     \caption{Linear System Input}
     \label{}
 \end{figure}
@@ -68,34 +68,48 @@ The following figures depict the outputs and input of the linear system with the
 
 \subsubsection*{b) Design the observer for the nonlinear model.}
 
-The controller and observer used for the nonlinear system are the same as for the linear model. There is enough design buffer to compensate for the nonlinear dynamics much like in Problem 3.
+The controller and observer used for the nonlinear system are the same as for the linear model. There is enough design buffer to compensate for the nonlinear dynamics much like in Problem 3. The closed-loop eigenvalues are found from $det(sI-(A-LC))=0$ and are the same as the linear model. They are the following:
+
+\begin{equation*}
+    \begin{split}
+        s & = -9.91\pm6.60, -28.90, -62.59
+    \end{split}
+\end{equation*}
+
+The eigenvalues of $A-BK$ are the same as Problem 3 given the controller didn't change. They are the following:
+
+\begin{equation*}
+    \begin{split}
+        s & = -1.32\pm0.88, -3.85, -8.34
+    \end{split}
+\end{equation*}
 
 The following figures depict the outputs and input of the nonlinear system with the above controller:
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_nlin_x.png}
     \caption{Nonlinear System X Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_nlin_x_err.png}
     \caption{Nonlinear System X Error}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_nlin_theta.png}
     \caption{Nonlinear System $\theta$ Output}
     \label{}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_nlin_theta_err.png}
     \caption{Nonlinear System $\theta$ Error Input}
     \label{}
 \end{figure}
@@ -103,7 +117,7 @@ The following figures depict the outputs and input of the nonlinear system with 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{figs/of_nlin_input.png}
     \caption{Nonlinear System Input}
     \label{}
 \end{figure}
