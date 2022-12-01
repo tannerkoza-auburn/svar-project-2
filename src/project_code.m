@@ -22,14 +22,18 @@ D=[0 ; 0];
 max_theta=0.61;
 max_x=0.55;
 v=[1/(max_x^2) 1  1/(max_theta^2) 1];
-Q=diag(v);
+Q=diag(v)/20;
 R=1;
 [P,k,s]=icare(A,B,Q,R);
 k2=inv(R)*B'*P;
 
+%part 4 
+% Q = C'*[Q(1,1) 0; 0 Q(3,3)]*C;
+% [P,k,s]=icare(A,B,Q,R);
+
 %part 5
-v2=[1/(max_x^2) 1  1/(max_theta^2) 1 1];
-Q_bar=diag(v2);
+v2=[1/(max_x^2) 1  1/(max_theta^2) 1 10];
+Q_bar=10*diag(v2);
 C_bar=[1 , 0 , 0 , 0];
 A_bar=[A , zeros(4,1) ; C_bar , zeros(1,1)];
 B_bar=[B ; zeros(1,1)];
@@ -54,7 +58,7 @@ dt = 0.002; %integration step,
 tf = 10; %final time, sec
 
 % INTIAL CONDITONS
-x_initial = [0.5 ; 0 ; deg2rad(30) ; 0];
+x_initial = [-0.5 ; 0 ; deg2rad(30) ; 0];
 
 %% Set Controller
 % Set the Controller:
@@ -80,7 +84,7 @@ Model = 1;
 
 % Set Desired State
 % Set the desired state: 1 = Regulation, 2 = Setpoint Tracking.
-Desired = 1;
+Desired = 2;
 
 if Desired == 1
     xd = [0 , 0 , 0 , 0];
@@ -90,61 +94,61 @@ end
 
 % Run Simulation
 %part 3-5
-% [t,~,x,u1] = sim('new_Sim_Simulink');
+[t,~,x,u1] = sim('new_Sim_Simulink');
 %part6
-[t,~,x,u1,x_hat] = sim('new_Sim_Simulink2');
+% [t,~,x,u1,x_hat] = sim('new_Sim_Simulink2');
 
 %   x is the state vector of [x; x_dot; phi; phi_dot],  4x1 vector
 
 x1 = x(:,1);% Cart x position plot
 phi = x(:,3);
 theta = rad2deg((phi+pi()))-180;
-delx=x-x_hat;
+% delx=x-x_hat;
 
 %part3-5
-% plot(t,x1)
-% title('X vs Time')
-% xlabel('Time (s)')
-% ylabel('X (m)')
-% figure
-% plot(t,theta)
-% title('Theta vs Time')
-% xlabel('Time(s)')
-% ylabel('Theta(deg)')
-% figure
-% plot(t,u1)
-% title('Input vs Time')
-% ylabel('Force (N)')
-% xlabel('Time (s)')
-
-%part6
 plot(t,x1)
-hold on
-plot(t,x_hat(:,1))
 title('X vs Time')
 xlabel('Time (s)')
 ylabel('X (m)')
-legend('x','x hat')
 figure
 plot(t,theta)
-hold on
-plot(t,rad2deg(x_hat(:,3)+pi())-180)
 title('Theta vs Time')
 xlabel('Time(s)')
 ylabel('Theta(deg)')
-legend('theta','theta hat')
 figure
 plot(t,u1)
 title('Input vs Time')
 ylabel('Force (N)')
 xlabel('Time (s)')
-figure
-plot(t,delx(:,1))
-ylabel('Error X')
-xlabel('Time (s)')
-title('Error Over Time X')
-figure
-plot(t,rad2deg(delx(:,3)))
-ylabel('Error Phi')
-xlabel('Time (s)')
-title('Error Over Time Phi')
+
+%part6
+% plot(t,x1)
+% hold on
+% plot(t,x_hat(:,1))
+% title('X vs Time')
+% xlabel('Time (s)')
+% ylabel('X (m)')
+% legend('x','x hat')
+% figure
+% plot(t,theta)
+% hold on
+% plot(t,rad2deg(x_hat(:,3)+pi())-180)
+% title('Theta vs Time')
+% xlabel('Time(s)')
+% ylabel('Theta(deg)')
+% legend('theta','theta hat')
+% figure
+% plot(t,u1)
+% title('Input vs Time')
+% ylabel('Force (N)')
+% xlabel('Time (s)')
+% figure
+% plot(t,delx(:,1))
+% ylabel('Error X')
+% xlabel('Time (s)')
+% title('Error Over Time X')
+% figure
+% plot(t,rad2deg(delx(:,3)))
+% ylabel('Error Phi')
+% xlabel('Time (s)')
+% title('Error Over Time Phi')
