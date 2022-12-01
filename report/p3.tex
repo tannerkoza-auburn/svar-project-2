@@ -1,0 +1,102 @@
+\subsection*{Problem 3: LQR State Feedback Regulation}
+
+\subsubsection*{a) Design the controller for the linear model.}
+
+$Q$, $R$, and $K$ were designed using the following methodology. $Q$ was designed using Bryson's rule to unit scale the max $\theta$ requirement of 0.61 rad and an arbitrary maximum $x$ (set at 0.55 m) to limit overshoot. The derivatives of the states in question were set to a value of 1 as their weighting is inherently captured within the $\theta$ and $x$ states.
+
+\begin{equation*}
+    \begin{split}
+        Q & =
+        \begin{bmatrix}
+            3.31 & 0 & 0    & 0 \\
+            0    & 1 & 0    & 0 \\
+            0    & 0 & 2.69 & 0 \\
+            0    & 0 & 0    & 1 \\
+        \end{bmatrix}
+    \end{split}
+\end{equation*}
+
+$R$ was set to a value of 1 as there is only 1 input, meaning there is more value in scaling $Q$ relative to $R$ given the performance of your LQR controller is determined by the ratio between the two.
+
+Using \codeword{icare()} in MATLAB, the controller $K$ was determined to be the following:
+
+\begin{equation*}
+    \begin{split}
+        K & =
+        \begin{bmatrix}
+            -1.82 & -2.70 & 22.32 & 4.30 \\
+        \end{bmatrix}
+    \end{split}
+\end{equation*}\
+
+\codeword{icare()} solves the Algebraic Riccati Equation ($A^TP +  PA + Q -PBR^{-1}B^TP = 0$) for $P$ which is used in determining the controller $K$ with the following:
+
+\begin{equation*}
+    \begin{split}
+        K & = R^{-1}B^TP
+    \end{split}
+\end{equation*}
+
+The following figures depict the outputs and input of the linear system with the above controller:
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{figs/sf_lin_x.png}
+    \caption{Linear System X Output}
+    \label{}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{figs/sf_lin_theta.png}
+    \caption{Linear System $\theta$ Output}
+    \label{}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{figs/sf_lin_input.png}
+    \caption{Linear System Input}
+    \label{}
+\end{figure}
+
+\clearpage
+
+The closed-loop eigenvalues are also found in the result of \codeword{icare()}, but it is simply from $det(sI-(A-BK))=0$. They are the following:
+
+\begin{equation*}
+    \begin{split}
+        s & = -1.32\pm0.88, -3.85, -8.34
+    \end{split}
+\end{equation*}
+
+\subsubsection*{b) Design the controller for the nonlinear model.}
+
+The $Q$, $R$, and $K$ used for the nonlinear system are the same as for the linear model.
+
+The following figures depict the outputs and input of the nonlinear system with the above controller:
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{figs/sf_nlin_x.png}
+    \caption{Nonlinear System X Output}
+    \label{}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{figs/sf_nlin_theta.png}
+    \caption{Nonlinear System $\theta$ Output}
+    \label{}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{figs/sf_nlin_input.png}
+    \caption{Nonlinear System Input}
+    \label{}
+\end{figure}
+
+\subsubsection*{c) Discuss the differences between tuning the model for the linear and nonlinear model.}
+
+For our particular case, there was no difference in tuning as the $Q$ and $R$ values for the linear model were able to produce a $K$ that yielded stable results that met the design requirements for the nonlinear model. The settling time of the nonlinear response is slightly slower than that for the linear model as expected, but it is still within the performance requirements. If our initial tune was not successful, we would have likely needed to increase our values within $Q$ to account for the nonlinear dynamics.
